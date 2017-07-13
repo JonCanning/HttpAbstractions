@@ -32,6 +32,7 @@ namespace Microsoft.AspNetCore.WebUtilities
         private int _bytesRead;
 
         private bool _isBlocked;
+        private bool _disposed;
 
         public HttpRequestStreamReader(Stream stream, Encoding encoding)
             : this(stream, encoding, DefaultBufferSize, ArrayPool<byte>.Shared, ArrayPool<char>.Shared)
@@ -107,23 +108,21 @@ namespace Microsoft.AspNetCore.WebUtilities
                 }
             }
         }
-
+        
+        // Dispose should not null anything out
         protected override void Dispose(bool disposing)
         {
-            if (disposing && _stream != null)
+            if (disposing && !_disposed)
             {
-                _stream = null;
-
+                _disposed = true;
                 if (_bytePool != null)
                 {
                     _bytePool.Return(_byteBuffer);
-                    _byteBuffer = null;
                 }
 
                 if (_charPool != null)
                 {
                     _charPool.Return(_charBuffer);
-                    _charBuffer = null;
                 }
             }
 
@@ -132,7 +131,7 @@ namespace Microsoft.AspNetCore.WebUtilities
 
         public override int Peek()
         {
-            if (_stream == null)
+            if (_disposed)
             {
                 throw new ObjectDisposedException("stream");
             }
@@ -150,7 +149,7 @@ namespace Microsoft.AspNetCore.WebUtilities
 
         public override int Read()
         {
-            if (_stream == null)
+            if (_disposed)
             {
                 throw new ObjectDisposedException("stream");
             }
@@ -183,7 +182,7 @@ namespace Microsoft.AspNetCore.WebUtilities
                 throw new ArgumentOutOfRangeException(nameof(count));
             }
 
-            if (_stream == null)
+            if (_disposed)
             {
                 throw new ObjectDisposedException("stream");
             }
@@ -246,7 +245,7 @@ namespace Microsoft.AspNetCore.WebUtilities
                 throw new ArgumentOutOfRangeException(nameof(count));
             }
 
-            if (_stream == null)
+            if (_disposed)
             {
                 throw new ObjectDisposedException("stream");
             }
