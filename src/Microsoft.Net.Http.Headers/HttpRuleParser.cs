@@ -30,6 +30,8 @@ namespace Microsoft.Net.Http.Headers
 
             "ddd, d MMM yyyy H:m:s zzz", // RFC 5322
             "ddd, d MMM yyyy H:m:s", // RFC 5322 no zone
+            "ddd, d'-'MMM'-'yyyy H:m:s 'GMT'", // TODO Supply reason
+
             "d MMM yyyy H:m:s zzz", // RFC 5322 no day-of-week
             "d MMM yyyy H:m:s", // RFC 5322 no day-of-week, no zone
         };

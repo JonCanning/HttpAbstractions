@@ -16,6 +16,7 @@ namespace Microsoft.Net.Http.Headers
             CheckValidParsedValue("Tue, 15 Nov 1994 08:12:31 GMT", new DateTimeOffset(1994, 11, 15, 8, 12, 31, TimeSpan.Zero));
             CheckValidParsedValue("      Sunday, 06-Nov-94 08:49:37 GMT   ", new DateTimeOffset(1994, 11, 6, 8, 49, 37, TimeSpan.Zero));
             CheckValidParsedValue(" Tue,\r\n 15 Nov\r\n 1994 08:12:31 GMT   ", new DateTimeOffset(1994, 11, 15, 8, 12, 31, TimeSpan.Zero));
+            CheckValidParsedValue("Sat, 09-Dec-2017 07:07:03 GMT ", new DateTimeOffset(2017, 12, 09, 7, 7, 3, TimeSpan.Zero));
         }
 
         [Fact]
